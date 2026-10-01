@@ -108,6 +108,8 @@ aqe learning import -i seed/aqe-seed-patterns.json
 aqe learning stats     # Total jumps from 0 to 76: AQE's own patterns plus your six
 ```
 
+The import line can read `Imported: 0 · Skipped: 6` even when it worked. Trust `aqe learning stats`: if Total reads 76, the seed brain is loaded.
+
 **6. Launch your coding agent in this folder** — Claude Code, Copilot, Cursor, Kiro, Codex, Windsurf… whichever you have. This folder is your workspace root; all paths in LAB.md are relative to it.
 
 ➡️ **Next:** open **[LAB.md](./LAB.md)** and start with Exercise 1.
