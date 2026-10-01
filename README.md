@@ -45,11 +45,11 @@ A tutorial day is not enough time to fix a laptop. Please get through Setup at h
 **1. Get this repo.** Clone it (or download the ZIP from the green **Code** button and unzip), then move into the folder:
 
 ```bash
-git clone https://github.com/fndlalit/HUSTEF-Agentic-QCSD-Workshop
-cd HUSTEF-Agentic-QCSD-Workshop
+git clone https://github.com/fndlalit/HUSTEF-70-Percent-Problem-Tutorial
+cd HUSTEF-70-Percent-Problem-Tutorial
 ```
 
-> **Clone close to your home folder.** The code indexer skips any file more than ten directories deep, so `~/HUSTEF-Agentic-QCSD-Workshop` works and `~/Documents/Conferences/2026/HUSTEF/tutorials/...` silently drops the API routes from the knowledge graph.
+> **Clone close to your home folder.** The code indexer skips any file more than ten directories deep, so `~/HUSTEF-70-Percent-Problem-Tutorial` works and `~/Documents/Conferences/2026/HUSTEF/tutorials/...` silently drops the API routes from the knowledge graph.
 
 **2. Install AQE and the demo app's dependencies.** Run these once, from inside the folder:
 
