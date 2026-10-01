@@ -209,14 +209,15 @@ Save the brief to reports/05-handoff-brief.md.
 
 ---
 
-## After the runs — Apply PACT
+## After the runs — Apply PACTS
 
-For each report, ask:
+PACTS is the Agentic QE framework's evaluation lens ([agentic-qe.dev/framework](https://agentic-qe.dev/framework)). For each report, ask:
 
 - **Proactive?** Did it flag risk *before* you asked, or only answer the prompt?
 - **Autonomous?** Did it decide what to inspect, or wait for your steers?
 - **Collaborative?** Did it connect findings across concerns (and across exercises), or treat each in a silo?
 - **Targeted?** Was the analysis fit to *this* checkout flow, or generic checklists?
+- **Structured?** Can you trace every conclusion to the agent that made it, the input it read and the reason it gave, or do you have to take it on trust?
 
 In pairs, score each report 0–3 per property. Share the most surprising weakness.
 
