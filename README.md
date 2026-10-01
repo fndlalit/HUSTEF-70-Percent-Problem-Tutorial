@@ -12,18 +12,20 @@ The catch: great agents need something real to chew on. So this repo also ships 
 
 ## What you'll do
 
-A short warm-up plus four SDLC exercises and a self-learning close — all copy-paste, in **[LAB.md](./LAB.md)**. The four phases build on each other (Refinement's ideas feed Development's tests; CI/CD verifies the result), and every exercise **persists what it learns** so the fleet's memory grows as you go:
+A short warm-up plus six SDLC exercises (requirements testability, product factors, exploratory coverage, defect risk profiling, test design, deployment readiness) and a self-learning close — all copy-paste, in **[LAB.md](./LAB.md)**. The exercises build on each other (Refinement's ideas feed exploration and Development; the defect risk profile picks the module; CI/CD verifies the result), and every exercise **persists what it learns** so the fleet's memory grows as you go:
 
 | Step | Agent(s) / tool | The question it answers |
 |------|-----------------|--------------------------|
 | **0 · Warm-up** | `aqe code index src/` (your terminal) | Build a knowledge-graph map of the code and a clean memory baseline. Runs locally, no API key, about two seconds. |
 | **1 · Ideation** | ideation gate (quality-criteria + risk + requirements) | Before any code — can a QE even do their job with these requirements? GO / CONDITIONAL / NO-GO. |
 | **2 · Refinement** | `qe-product-factors-assessor` | What is this product really made of (SFDIPOT), and where's the risk? |
+| **2b · Exploratory coverage** | `/exploratory-testing-advanced` | Which exploratory charters does the product need, what does a first pass find, and what is left for a human tester? |
+| **2c · Defect risk profile** | `qe-defect-predictor` | Which modules are most likely to hold defects, and why? Does that agree with the module we test next? |
 | **3 · Development** | `qe-test-architect` | Can it turn those ideas into strong, runnable tests for the riskiest module? |
 | **4 · CI/CD** | `qe-queen-coordinator` (verify) | Is this releasable? Coverage + security + a 90% gate → GO / CONDITIONAL / NO-GO. |
 | **5 · Self-Learning** | AQE memory | Put memory to work: have the fleet consolidate everything it learned into an instant onboarding / handoff brief. |
 
-The four SDLC exercises have **two prompt versions** — one for **Claude Code users** (skills / orchestrator) and one for **non-Claude-Code users** (generic step list) — so they work on any tool; Steps 0 and 5 are MCP-tool calls identical everywhere. You then **Apply PACTS** to score each agent's output, and finish with a **Personal Adoption Roadmap**. Everything is kept lean and token-cheap so a whole room can run it on personal keys.
+The SDLC exercises have **two prompt versions** — one for **Claude Code users** (skills / orchestrator) and one for **non-Claude-Code users** (generic step list) — so they work on any tool; Steps 0 and 5 are MCP-tool calls identical everywhere. You then **Apply PACTS** to score each agent's output, and finish with a **Personal Adoption Roadmap**. Everything is kept lean and token-cheap so a whole room can run it on personal keys.
 
 ---
 

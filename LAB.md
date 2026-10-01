@@ -1,14 +1,14 @@
 # Workshop Lab — Copy-Paste Exercises
 
-Six steps on this deliberately-flawed checkout app: **build a local knowledge graph (0) → Ideation → Refinement → Development → CI/CD (1–4) → Self-Learning (5)**, then a **Personal Adoption Roadmap**. The SDLC exercises build on each other (Refinement feeds Development; CI/CD verifies) and each ends by saving its learnings; Step 5 turns those into an instant handoff brief. Everything indexes and embeds with a **local on-device model — your code never leaves your machine** — and it's scoped token-cheap for a whole room on personal keys.
+Six steps on this deliberately-flawed checkout app: **build a local knowledge graph (0) → Ideation → Refinement → Exploratory coverage → Defect risk profile → Development → CI/CD (1–4, with 2b and 2c) → Self-Learning (5)**, then a **Personal Adoption Roadmap**. The SDLC exercises build on each other (Refinement feeds exploration and Development; the defect risk profile picks the module Development and CI/CD work on) and each ends by saving its learnings; Step 5 turns those into an instant handoff brief. Everything indexes and embeds with a **local on-device model — your code never leaves your machine** — and it's scoped token-cheap for a whole room on personal keys.
 
-**Pick your prompt — each SDLC exercise (1–4) has two versions:**
-- **Claude Code Users** — AQE skills / orchestrator (`/qcsd-ideation-swarm`, `qe-test-architect`, `qe-queen-coordinator`).
+**Pick your prompt — each SDLC exercise (1–4, 2b, 2c) has two versions:**
+- **Claude Code Users** — AQE skills / orchestrator (`/qcsd-ideation-swarm`, `/exploratory-testing-advanced`, `qe-defect-predictor`, `qe-test-architect`, `qe-queen-coordinator`).
 - **Non Claude Code Users** (Copilot, Codex, Gemini, …) — the same work as a generic step list via the AQE MCP tools.
 
 Both write to the same report and end with **"Save learnings and persist patterns."** *(Step 0 is three terminal commands and step 5 is one prompt, so both are identical on every tool and have no split.)*
 
-**Before you start:** finish the [README](./README.md) Setup (clone → `npm install -g agentic-qe@3.14.1` → `aqe init --auto --with-<your-tool>` → `npm install`), then launch your agent here. **Don't skip `aqe init`** (it installs the agents, MCP config, and memory DB) and **run the exercises in order** (3 reads 2's output; 5 recalls what 0–4 saved). Paths are relative to the repo root.
+**Before you start:** finish the [README](./README.md) Setup (clone → `npm install -g agentic-qe@3.14.1` → `aqe init --auto --with-<your-tool>` → `npm install`), then launch your agent here. **Don't skip `aqe init`** (it installs the agents, MCP config, and memory DB) and **run the exercises in order** (2b and 3 read 2's output; 3 and 4 act on 2c's ranking; 5 recalls what 0–4 saved). Paths are relative to the repo root.
 
 ---
 
@@ -101,6 +101,80 @@ Then:
 2. Save the assessment to reports/02-refinement-product-factors.md
 3. Save learnings and persist patterns
 ```
+
+---
+
+## Exercise 2b — Exploratory coverage: charters from the product factors (≈20 min)
+
+> *Phase:* Refinement · *Why:* product factors tell you *what* the product is made of; exploration tells you how it behaves. The agent drafts charters from Exercise 2's test ideas and runs a first, code-level pass. You pick the charter that matters and judge what it found.
+
+**▸ Claude Code Users** — the exploratory-testing skill:
+
+```
+/exploratory-testing-advanced
+
+Using the test ideas in reports/02-refinement-product-factors.md,
+write three time-boxed exploratory charters for the guest checkout
+and run a first pass of each against src/app/checkout,
+src/components/CheckoutForm.tsx and src/lib/. Label every finding
+EXECUTED, STATIC or INFERRED; list the questions a human must answer.
+Save to reports/02b-exploratory-charters.md.
+Save learnings and persist patterns.
+```
+
+**▸ Non Claude Code Users** — the same as explicit steps:
+
+```
+Turn the refinement ideas into exploratory coverage for the guest checkout:
+
+1. Read reports/02-refinement-product-factors.md
+2. Write three time-boxed exploratory charters (mission, scope, risks,
+   heuristics such as FEW HICCUPPS, and a test tour for each)
+3. For each charter, explore the code in src/app/checkout,
+   src/components/CheckoutForm.tsx and src/lib/ and record what you find,
+   labelling each finding EXECUTED, STATIC or INFERRED
+4. List the open questions only a human tester can answer
+5. Save to reports/02b-exploratory-charters.md
+6. Save learnings and persist patterns
+```
+
+> *Your part:* pick the one charter you would run first on a real team and say why. Then read its findings: which are evidence and which are guesses? If you have Stripe test keys in `.env`, `npm run dev` lets you run that charter against the live checkout at `http://localhost:3000`.
+
+---
+
+## Exercise 2c — Defect risk profile: where will the bugs be? (≈15 min)
+
+> *Phase:* Refinement → Development · *Why:* before writing tests, decide where they pay off. The defect predictor ranks the modules by defect risk, and you check whether its ranking agrees with Exercise 3's choice of `payment-retry.ts`.
+
+**▸ Claude Code Users** — the defect predictor:
+
+```
+Use qe-defect-predictor to build a defect risk profile for every
+module in src/lib/ and src/components/CheckoutForm.tsx from
+complexity, coupling, coverage (npm run test:coverage) and git history.
+Rank the modules, give the top three risk factors for each with its
+evidence class, and say whether src/lib/payment-retry.ts belongs at
+the top of the list, and why.
+Save to reports/02c-defect-risk-profile.md.
+Save learnings and persist patterns.
+```
+
+**▸ Non Claude Code Users** — the same as explicit steps:
+
+```
+Build a defect risk profile for the checkout app:
+
+1. Run npm run test:coverage and read the per-file coverage
+2. For every module in src/lib/ and for src/components/CheckoutForm.tsx,
+   assess complexity, coupling, coverage and change history (git log)
+3. Rank the modules from highest to lowest defect risk, with the top three
+   risk factors for each, labelled EXECUTED, STATIC or INFERRED
+4. Say whether src/lib/payment-retry.ts belongs at the top, and why
+5. Save to reports/02c-defect-risk-profile.md
+6. Save learnings and persist patterns
+```
+
+> *Your part:* coverage says `payment-retry.ts` is already at 100% of statements. If the profile still ranks it high, what is the reason, and do you agree? If it ranks something else higher, would you change the target for Exercises 3 and 4?
 
 ---
 
