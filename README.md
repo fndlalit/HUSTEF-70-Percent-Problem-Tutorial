@@ -1,8 +1,8 @@
-# SOFTEC Asia 2026 · Agentic QCSD Workshop
+# HUSTEF 2026 · Agentic QCSD Tutorial
 
-Welcome 👋 This is the official repo for the **Agentic Quality-Conscious Software Delivery (QCSD)** hands-on workshop at **SOFTEC Asia 2026** (MSTB), Kuala Lumpur.
+Welcome 👋 This is the official repo for the full-day tutorial **The 70% Problem: Reclaiming Testing's Intellectual Core with Agentic Quality Engineering** at **[HUSTEF 2026](https://hustef.com/lalit-dragan_2026/)**, Budapest.
 
-**Session MR305 · Tuesday 15 September 2026 · 13:30 to 17:30 · Facilitator: Lalitkumar Bhamare**
+**Full-day tutorial · Tuesday 6 October 2026 · 09:00 to 17:00 · Facilitators: Lalitkumar Bhamare and Dragan Spiridonov**
 
 **Agentic QCSD** is about putting autonomous AI quality agents to work *across the whole delivery lifecycle* — not just generating tests, but reasoning about requirements, product risk, code quality, security, and accessibility the way a quality engineer would. In this session you'll drive a fleet of these agents (**[Agentic QE](https://github.com/proffesor-for-testing/agentic-qe)**) through four SDLC phases, watch what they surface *on their own*, and then judge their output with the **PACT** lens (Proactive, Autonomous, Collaborative, Targeted).
 
@@ -29,7 +29,7 @@ The four SDLC exercises have **two prompt versions** — one for **Claude Code u
 
 ## Before you arrive
 
-Four hours is not enough time to fix a laptop. Please get through Setup at home.
+A tutorial day is not enough time to fix a laptop. Please get through Setup at home.
 
 - **Node.js 20 or newer, and npm 10 or newer.** Check with `node -v` and `npm -v`. AQE 3.14 declares Node 22.13 in its `engines` field, so on Node 20 npm prints an `EBADENGINE` warning and installs anyway. Verified on Node 20.20.2: install, `aqe init`, the code index and the test suite all behave identically to Node 22. The one setup that does fail is npm with `engine-strict=true`, which turns that warning into an error; there, use Node 22.13 or newer.
 - **Rights to install a global npm package.** Setup runs `npm install -g agentic-qe`. If your machine blocks that, bring a laptop that does not.
@@ -45,11 +45,11 @@ Four hours is not enough time to fix a laptop. Please get through Setup at home.
 **1. Get this repo.** Clone it (or download the ZIP from the green **Code** button and unzip), then move into the folder:
 
 ```bash
-git clone https://github.com/fndlalit/SOFTEC-Agentic-QCSD-Workshop
-cd SOFTEC-Agentic-QCSD-Workshop
+git clone https://github.com/fndlalit/HUSTEF-Agentic-QCSD-Workshop
+cd HUSTEF-Agentic-QCSD-Workshop
 ```
 
-> **Clone close to your home folder.** The code indexer skips any file more than ten directories deep, so `~/SOFTEC-Agentic-QCSD-Workshop` works and `~/Documents/Conferences/2026/SOFTEC/workshops/...` silently drops the API routes from the knowledge graph.
+> **Clone close to your home folder.** The code indexer skips any file more than ten directories deep, so `~/HUSTEF-Agentic-QCSD-Workshop` works and `~/Documents/Conferences/2026/HUSTEF/tutorials/...` silently drops the API routes from the knowledge graph.
 
 **2. Install AQE and the demo app's dependencies.** Run these once, from inside the folder:
 
