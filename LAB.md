@@ -40,6 +40,8 @@ The two node counts differ because they count different things: the indexer repo
 
 > *Phase:* Ideation · *Why:* apply the QE ideation lenses to the epic and render a release gate *before a line of code is written*.
 
+> *Why the two extra lines:* in a full dry run (1 October 2026, AQE 3.14.1, Claude Code) the swarm's security auditor runs at maximum effort and, left alone, spent 30+ minutes and dozens of web fetches. Scoped to the files and without the security audit, the swarm finished in about 8 minutes for about $2.70, with all other reports and a GO / CONDITIONAL / NO-GO verdict.
+
 **▸ Claude Code Users** — the orchestrated ideation swarm. `qcsd-ideation-swarm` is installed as a **skill**, not a command file, so if your Claude Code build does not offer it after a slash, ask for it by name instead ("Use the qcsd-ideation-swarm skill to ..."):
 
 ```
@@ -48,6 +50,8 @@ The two node counts differ because they count different things: the indexer repo
 Analyze the guest-checkout epic in requirements/epic-checkout.md,
 using requirements/user-stories.md and
 requirements/acceptance-criteria.md for context.
+Work from these files only, with no web research. Skip the
+security audit: Exercise 4 covers security.
 Save all reports under reports/01-ideation-swarm/.
 Save learnings and persist patterns.
 ```
@@ -57,7 +61,8 @@ Save learnings and persist patterns.
 ```
 Assess the guest-checkout epic before any code is written. Read
 requirements/epic-checkout.md (with requirements/user-stories.md and
-requirements/acceptance-criteria.md for context), then:
+requirements/acceptance-criteria.md for context). Work from these files
+only, with no web research. Then:
 
 1. Recommend the quality criteria that matter most (HTSM: capability,
    reliability, security, performance, usability, …)
