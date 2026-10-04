@@ -8,7 +8,7 @@ Six steps on this deliberately-flawed checkout app: **build a local knowledge gr
 
 Both write to the same report and end with **"Save learnings and persist patterns."** *(Step 0 is three terminal commands and step 5 is one prompt, so both are identical on every tool and have no split.)*
 
-**Before you start:** finish the [README](./README.md) Setup (clone → `npm install -g agentic-qe@3.14.1` → `aqe init --auto --with-<your-tool>` → `npm install`), then launch your agent here. **Don't skip `aqe init`** (it installs the agents, MCP config, and memory DB) and **run the exercises in order** (2b and 3 read 2's output; 3 and 4 act on 2c's ranking; 5 recalls what 0–4 saved). Paths are relative to the repo root.
+**Before you start:** finish the [README](./README.md) Setup (clone → `npm install -g agentic-qe@3.14.1` → `aqe init --auto --with-<your-tool>` → `npm install` → `aqe code index src/` → `npm install -g @huggingface/transformers@4.2.0`), then launch your agent here. **Don't skip `aqe init`** (it installs the agents, MCP config, and memory DB) and **run the exercises in order** (2b and 3 read 2's output; 3 and 4 act on 2c's ranking; 5 recalls what 0–4 saved). Paths are relative to the repo root.
 
 ---
 
@@ -26,7 +26,7 @@ aqe memory usage
 
 | Command | Expected on this repo |
 |---------|----------------------|
-| `aqe code index src/` | `Files indexed: 21` · `Nodes created: 102` · `Edges created: 117` · about 10 s |
+| `aqe code index src/` | `Files indexed: 21` · `Nodes created: 102` · `Edges created: 117` · a few seconds |
 | `aqe hg stats` | 140 nodes / 102 edges, broken down as function 80, file 26, module 22, test 12 |
 | `aqe memory usage` | Entries 21 · Vectors 102 · Namespaces 1 |
 
@@ -156,7 +156,7 @@ Turn the refinement ideas into exploratory coverage for the guest checkout:
 ```
 Use qe-defect-predictor to build a defect risk profile for every
 module in src/lib/ and src/components/CheckoutForm.tsx from
-complexity, coupling, coverage (npm run test:coverage) and git history.
+complexity, coupling and coverage (npm run test:coverage).
 Rank the modules, give the top three risk factors for each with its
 evidence class, and say whether src/lib/payment-retry.ts belongs at
 the top of the list, and why.
@@ -171,7 +171,7 @@ Build a defect risk profile for the checkout app:
 
 1. Run npm run test:coverage and read the per-file coverage
 2. For every module in src/lib/ and for src/components/CheckoutForm.tsx,
-   assess complexity, coupling, coverage and change history (git log)
+   assess complexity, coupling and coverage
 3. Rank the modules from highest to lowest defect risk, with the top three
    risk factors for each, labelled EXECUTED, STATIC or INFERRED
 4. Say whether src/lib/payment-retry.ts belongs at the top, and why
@@ -280,7 +280,7 @@ Save the brief to reports/05-handoff-brief.md.
 
 > *What you will see along the way:* lines mentioning `brain.rvf` or `VECTOR_SPACE_UNVERIFIED`, and possibly `brain.rvf.corrupt-NNNN` files in `.agentic-qe/`. Both are expected. The optional vector index is skipped and AQE falls back to SQLite, which is the authoritative store — your patterns are saved either way.
 
-> *If nothing comes back:* run `aqe learning stats`. It should read **`Total: 76`** — AQE's own foundational patterns plus the six from your exercises. If it reads `Total: 0`, setup step 5 was skipped, so nothing was ever persisted: install the embedder and run `aqe learning import -i seed/aqe-seed-patterns.json`. Short on time, consolidate from what you already have instead: *"Read reports/01 through reports/04 and write the same one-page brief to reports/05-handoff-brief.md."* See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) if you want the detail.
+> *If nothing comes back:* run `aqe learning stats`. It should read **`Total: 76`** — AQE's own foundational patterns plus the six from your exercises. If it reads `Total: 28`, the embedder was installed after the store was first opened: the six seed patterns are stored, so carry on. If it reads `Total: 0`, setup step 5 was skipped, so nothing was ever persisted: install the embedder and run `aqe learning import -i seed/aqe-seed-patterns.json`. Short on time, consolidate from what you already have instead: *"Read reports/01 through reports/04 and write the same one-page brief to reports/05-handoff-brief.md."* See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) if you want the detail.
 
 > *Not on Claude Code?* Claude Code captures and recalls learnings automatically through the ReasoningBank hooks. Other tools route the same work through the `memory_store` / `memory_query` MCP tools. If your agent recalls nothing there, load the seed brain above and check that `aqe learning stats` reads 76 before debugging anything else.
 

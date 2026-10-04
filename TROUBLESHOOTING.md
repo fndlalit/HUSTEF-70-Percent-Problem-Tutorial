@@ -22,6 +22,9 @@ opened — including when SQLite, the authoritative store, took the write. So
 - **`Total: 0`** — there is no embedder, nothing was stored, and nothing will be
   until one is installed. See setup step 5 in the [README](./README.md), then
   re-run the import.
+- **`Total: 28`** — it worked, with a smaller base. `aqe learning stats` was run once
+  before the embedder was installed, which uses up AQE's one-time cross-domain seeding.
+  You have AQE's 22 base patterns plus your six. Exercise 5 works as written.
 - **`Total: 76`** — it worked: AQE's own foundational patterns plus your six. Do
   not re-run the import.
 

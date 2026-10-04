@@ -16,7 +16,7 @@ A short warm-up plus six SDLC exercises (requirements testability, product facto
 
 | Step | Agent(s) / tool | The question it answers |
 |------|-----------------|--------------------------|
-| **0 · Warm-up** | `aqe code index src/` (your terminal) | Build a knowledge-graph map of the code and a clean memory baseline. Runs locally, no API key, about two seconds. |
+| **0 · Warm-up** | `aqe code index src/` (your terminal) | Build a knowledge-graph map of the code and a clean memory baseline. Runs locally, no API key, a few seconds. |
 | **1 · Ideation** | ideation gate (quality-criteria + risk + requirements) | Before any code — can a QE even do their job with these requirements? GO / CONDITIONAL / NO-GO. |
 | **2 · Refinement** | `qe-product-factors-assessor` | What is this product really made of (SFDIPOT), and where's the risk? |
 | **2b · Exploratory coverage** | `/exploratory-testing-advanced` | Which exploratory charters does the product need, what does a first pass find, and what is left for a human tester? |
@@ -25,7 +25,7 @@ A short warm-up plus six SDLC exercises (requirements testability, product facto
 | **4 · CI/CD** | `qe-queen-coordinator` (verify) | Is this releasable? Coverage + security + a 90% gate → GO / CONDITIONAL / NO-GO. |
 | **5 · Self-Learning** | AQE memory | Put memory to work: have the fleet consolidate everything it learned into an instant onboarding / handoff brief. |
 
-The SDLC exercises have **two prompt versions** — one for **Claude Code users** (skills / orchestrator) and one for **non-Claude-Code users** (generic step list) — so they work on any tool; Steps 0 and 5 are MCP-tool calls identical everywhere. You then **Apply PACTS** to score each agent's output, and finish with a **Personal Adoption Roadmap**. Everything is kept lean and token-cheap so a whole room can run it on personal keys.
+The SDLC exercises have **two prompt versions** — one for **Claude Code users** (skills / orchestrator) and one for **non-Claude-Code users** (generic step list) — so they work on any tool; Step 0 is three terminal commands and Step 5 is one prompt, both identical on every tool. You then **Apply PACTS** to score each agent's output, and finish with a **Personal Adoption Roadmap**. Everything is kept lean and token-cheap so a whole room can run it on personal keys.
 
 ---
 
@@ -53,12 +53,11 @@ cd HUSTEF-70-Percent-Problem-Tutorial
 
 > **Clone close to your home folder.** The code indexer skips any file more than ten directories deep, so `~/HUSTEF-70-Percent-Problem-Tutorial` works and `~/Documents/Conferences/2026/HUSTEF/tutorials/...` silently drops the API routes from the knowledge graph.
 
-**2. Install AQE and the demo app's dependencies.** Run these once, from inside the folder:
+**2. Install AQE and set it up for your coding agent.** Run these once, from inside the folder:
 
 ```bash
 npm install -g agentic-qe@3.14.1   # the AQE CLI (global, one-time)
 aqe init --auto                    # set up AQE for YOUR coding agent — see the table below
-npm install                        # the demo app's own dependencies
 ```
 
 `aqe init --auto` configures **Claude Code** by default. Using a different coding agent? Add the matching flag — AQE works with **11 platforms** through a single MCP server:
@@ -81,10 +80,16 @@ npm install                        # the demo app's own dependencies
 aqe init --auto --with-all-platforms   # or just set up everything at once
 ```
 
-**4. Build the code knowledge graph.** Two commands in your terminal, before you open your coding agent:
+**3. Install the demo app's dependencies.**
 
 ```bash
-aqe code index src/     # expect: 21 files indexed, 102 nodes, 117 edges, ~10s
+npm install
+```
+
+**4. Build the code knowledge graph.** Three commands in your terminal, before you open your coding agent:
+
+```bash
+aqe code index src/     # expect: 21 files indexed, 102 nodes, 117 edges, a few seconds
 aqe hg stats            # the same graph, counted by node type
 aqe memory usage        # your starting baseline: 21 entries, 102 vectors
 ```
@@ -110,7 +115,7 @@ aqe learning stats     # Total jumps from 0 to 76: AQE's own patterns plus your 
 
 The import line can read `Imported: 0 · Skipped: 6` even when it worked. Trust `aqe learning stats`: if Total reads 76, the seed brain is loaded.
 
-**6. Launch your coding agent in this folder** — Claude Code, Copilot, Cursor, Kiro, Codex, Windsurf… whichever you have. This folder is your workspace root; all paths in LAB.md are relative to it.
+**6. Launch your coding agent in this folder** — Claude Code, Copilot, Cursor, Kiro, Codex, Windsurf… whichever you have. This folder is your workspace root; all paths in LAB.md are relative to it. On first launch Claude Code asks you to trust the folder and to approve the `agentic-qe` MCP server. Accept both, or the skills and memory tools will not load.
 
 ➡️ **Next:** open **[LAB.md](./LAB.md)** and start with Exercise 1.
 
