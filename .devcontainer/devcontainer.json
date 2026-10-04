@@ -1,0 +1,28 @@
+{
+  "name": "HUSTEF 2026 · The 70% Problem",
+  "build": { "dockerfile": "Dockerfile", "context": "." },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/tutorial,type=bind",
+  "workspaceFolder": "/workspaces/tutorial",
+  "remoteUser": "node",
+  "updateRemoteUserUID": true,
+  "hostRequirements": { "cpus": 4, "memory": "8gb", "storage": "32gb" },
+  "containerEnv": { "NEXT_TELEMETRY_DISABLED": "1" },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Checkout demo", "onAutoForward": "notify" }
+  },
+  "otherPortsAttributes": { "onAutoForward": "ignore" },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "waitFor": "postCreateCommand",
+  "customizations": {
+    "vscode": {
+      "extensions": ["anthropic.claude-code", "openai.chatgpt", "esbenp.prettier-vscode"],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.fontSize": 16,
+        "terminal.integrated.fontSize": 16
+      }
+    },
+    "codespaces": { "openFiles": ["docs/DEVCONTAINER.md", "LAB.md"] }
+  }
+}

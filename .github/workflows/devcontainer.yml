@@ -1,0 +1,26 @@
+name: Workshop devcontainer
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  workshop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check lifecycle preservation and shell syntax
+        run: |
+          for script in .devcontainer/*.sh; do bash -n "$script"; done
+          bash .devcontainer/test-lifecycle.sh
+      - name: Build workshop tools with latest AQE
+        run: docker build -t hustef-workshop .devcontainer
+      - name: Prepare and exercise the Linux container
+        run: |
+          docker run --rm --user root \
+            -v "$PWD:/workspaces/tutorial" -w /workspaces/tutorial \
+            -e NEXT_TELEMETRY_DISABLED=1 hustef-workshop \
+            bash -lc 'chown -R node:node /workspaces/tutorial && su node -c "bash .devcontainer/post-create.sh && bash .devcontainer/prepare-workshop.sh && node .devcontainer/verify-mcp.mjs && npm run test:coverage && npx --no-install tsc --noEmit && bash .devcontainer/smoke-app.sh"'

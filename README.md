@@ -33,7 +33,7 @@ The SDLC exercises have **two prompt versions** — one for **Claude Code users*
 
 A tutorial day is not enough time to fix a laptop. Please get through Setup at home.
 
-- **Node.js 20 or newer, and npm 10 or newer.** Check with `node -v` and `npm -v`. AQE 3.14 declares Node 22.13 in its `engines` field, so on Node 20 npm prints an `EBADENGINE` warning and installs anyway. Verified on Node 20.20.2: install, `aqe init`, the code index and the test suite all behave identically to Node 22. The one setup that does fail is npm with `engine-strict=true`, which turns that warning into an error; there, use Node 22.13 or newer.
+- **Node.js 22.13 or newer, and npm 10 or newer.** Check with `node -v` and `npm -v`. Use a supported Node release that satisfies the latest AQE package's engine requirement; the devcontainer supplies Node 22.
 - **Rights to install a global npm package.** Setup runs `npm install -g agentic-qe`. If your machine blocks that, bring a laptop that does not.
 - **A coding agent you already use, signed in and working.** Claude Code, GitHub Copilot, Cursor, AWS Kiro, OpenAI Codex CLI, Windsurf, Cline, OpenCode, Kilo Code, Roo Code or Continue.dev. AQE drives whichever one you have, through one MCP server.
 - **Your own model access.** Steps 1 to 5 spend your tokens on your own key or subscription. Step 0 spends none. Budget about what an hour of ordinary agent use costs you.
@@ -43,6 +43,12 @@ A tutorial day is not enough time to fix a laptop. Please get through Setup at h
 ---
 
 ## Setup
+
+**Prefer a ready-to-use container?** Open this repository in GitHub Codespaces,
+or run it locally with DevPod + Docker / VS Code Dev Containers. Follow
+[the container setup guide](./docs/DEVCONTAINER.md) instead of the manual steps
+below. It installs the latest AQE; you still use your own agent
+account and optional Stripe test keys.
 
 **1. Get this repo.** Clone it (or download the ZIP from the green **Code** button and unzip), then move into the folder:
 
@@ -56,7 +62,7 @@ cd HUSTEF-70-Percent-Problem-Tutorial
 **2. Install AQE and set it up for your coding agent.** Run these once, from inside the folder:
 
 ```bash
-npm install -g agentic-qe@3.14.1   # the AQE CLI (global, one-time)
+npm install -g agentic-qe@latest  # the latest published AQE CLI
 aqe init --auto                    # set up AQE for YOUR coding agent — see the table below
 ```
 
