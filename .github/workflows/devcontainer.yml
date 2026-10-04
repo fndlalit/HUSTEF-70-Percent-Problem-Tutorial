@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
       - name: Check lifecycle preservation and shell syntax
         run: |
           for script in .devcontainer/*.sh; do bash -n "$script"; done
@@ -20,6 +22,9 @@ jobs:
         run: docker build -t hustef-workshop .devcontainer
       - name: Prepare and exercise the Linux container
         run: |
+          WORKSHOP_RUNNER_UID="$(id -u)"
+          WORKSHOP_RUNNER_GID="$(id -g)"
+          trap 'sudo chown -R "$WORKSHOP_RUNNER_UID:$WORKSHOP_RUNNER_GID" "$PWD"' EXIT
           docker run --rm --user root \
             -v "$PWD:/workspaces/tutorial" -w /workspaces/tutorial \
             -e NEXT_TELEMETRY_DISABLED=1 hustef-workshop \

@@ -24,6 +24,9 @@ The GitHub Actions workflow repeats the container build, fresh preparation,
 MCP protocol check, unit coverage, TypeScript check, and app smoke check on Linux
 amd64. The MCP protocol check explicitly reports empty recall; CI success must
 not be described as qualification of the memory-learning exercise.
+The first Linux amd64 run also passed all 333 tests and verified the 21 source
+paths and six embedded seed patterns. CI uses current `actions/checkout` with
+credential persistence disabled, and restores runner file ownership after Docker.
 
 ## Adversarial findings and resolution
 
