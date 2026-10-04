@@ -8,7 +8,7 @@ Six steps on this deliberately-flawed checkout app: **build a local knowledge gr
 
 Both write to the same report and end with **"Save learnings and persist patterns."** *(Step 0 is three terminal commands and step 5 is one prompt, so both are identical on every tool and have no split.)*
 
-**Before you start:** finish the [README](./README.md) Setup (clone → `npm install -g agentic-qe@3.14.1` → `aqe init --auto --with-<your-tool>` → `npm install` → `aqe code index src/` → `npm install -g @huggingface/transformers@4.2.0`), then launch your agent here. **Don't skip `aqe init`** (it installs the agents, MCP config, and memory DB) and **run the exercises in order** (2b and 3 read 2's output; 3 and 4 act on 2c's ranking; 5 recalls what 0–4 saved). Paths are relative to the repo root.
+**Before you start:** finish the [container setup](./docs/DEVCONTAINER.md) or the [README](./README.md) manual Setup (Node 22.13+ → clone → `npm install -g agentic-qe@latest` → `aqe init --auto --with-<your-tool>` → `npm install` → `aqe code index src/` → `npm install -g @huggingface/transformers@4.2.0`), then launch your agent here. **Don't skip `aqe init`** (it installs the agents, MCP config, and memory DB; container setup does this for you) and **run the exercises in order** (2b and 3 read 2's output; 3 and 4 act on 2c's ranking; 5 recalls what 0–4 saved). Paths are relative to the repo root.
 
 ---
 
