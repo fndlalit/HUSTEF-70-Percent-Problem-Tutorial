@@ -1,5 +1,12 @@
 # Slide update handoff for Lalit
 
+> **Status, 4 October 2026:** applied in deck version 5 (`HUSTEF2026-Agentic-QCSD-Tutorial_5.pptx`), with three differences
+> based on a full manual-setup run on agentic-qe 3.14.8:
+> - **Fleet count kept at 60.** `aqe init --auto` reports "Agents installed: 60": 53 `qe-*.md` files plus 7 subagent files. The per-swarm counts (9, 10, 10, 10, 12) match the installed skills.
+> - **Graph totals shown for both paths.** 140 nodes / 102 edges after manual setup, 110 / 89 in the container.
+> - **Exercise 5 recall works in Claude Code.** It returned five patterns stored by Exercises 1 to 4. The REPORTS-BASED fallback is now part of the prompt for topics memory does not cover.
+> Slide numbers below refer to deck version 4.
+
 Deck reviewed: [HUSTEF2026-Agentic-QCSD-Tutorial_4.pptx](https://docs.google.com/presentation/d/1Ee9y8tHL4n8rWdCikyhNwlpWEVxXr6wT/edit).
 This note proposes edits; the presentation itself has not been changed.
 

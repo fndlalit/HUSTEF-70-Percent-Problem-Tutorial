@@ -26,10 +26,10 @@ opened — including when SQLite, the authoritative store, took the write. So
   before the embedder was installed, which uses up AQE's one-time cross-domain seeding.
   You have AQE's 22 base patterns plus your six. Exercise 5 works as written.
 - **`Total: 76`** — it worked: AQE's own foundational patterns plus your six. Do
-  not re-run the import.
+  not re-run the import. The total grows as the exercises store learnings.
 
-Both cases were confirmed on this repo with agentic-qe 3.14.1, on one machine with
-the embedder present and with it removed.
+All three cases were confirmed on this repo with agentic-qe 3.14.1 and again with 3.14.8
+(4 October 2026), with the embedder present, removed, and installed late.
 
 ## `VECTOR_SPACE_UNVERIFIED` and `brain.rvf`
 

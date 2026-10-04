@@ -8,6 +8,8 @@ Six steps on this deliberately-flawed checkout app: **build a local knowledge gr
 
 Both write to the same report and end with **"Save learnings and persist patterns."** *(Step 0 is three terminal commands and step 5 is one prompt, so both are identical on every tool and have no split.)*
 
+**Measured run times** (4 October 2026, AQE 3.14.8, Claude Code, unattended runs): Exercise 1 7.6 min / $2.59 · Exercise 2 1.7 min / $0.36 · Exercise 2b 5.0 min / $1.06 · Exercise 2c 3.1 min / $0.66 · Exercise 3 2.2 min / $0.52 · Exercise 4 1.2 min / $0.37 · Exercise 5 0.8 min / $0.32. About 22 minutes and $5.90 for the full set; interactive runs take longer because you approve tool calls.
+
 **Before you start:** finish the [container setup](./docs/DEVCONTAINER.md) or the [README](./README.md) manual Setup (Node 22.13+ → clone → `npm install -g agentic-qe@latest` → `aqe init --auto --with-<your-tool>` → `npm install` → `aqe code index src/` → `npm install -g @huggingface/transformers@4.2.0`), then launch your agent here. **Don't skip `aqe init`** (it installs the agents, MCP config, and memory DB; container setup does this for you) and **run the exercises in order** (2b and 3 read 2's output; 3 and 4 act on 2c's ranking; 5 recalls what 0–4 saved). Paths are relative to the repo root.
 
 ---
@@ -27,10 +29,10 @@ aqe memory usage
 | Command | Expected on this repo |
 |---------|----------------------|
 | `aqe code index src/` | `Files indexed: 21` · `Nodes created: 102` · `Edges created: 117` · a few seconds |
-| `aqe hg stats` | 140 nodes / 102 edges, broken down as function 80, file 26, module 22, test 12 |
+| `aqe hg stats` | Manual setup: 140 nodes / 102 edges (function 80, file 26, module 22, test 12). Container setup: 110 nodes / 89 edges (function 68, module 21, file 21) |
 | `aqe memory usage` | Entries 21 · Vectors 102 · Namespaces 1 |
 
-The two node counts differ because they count different things: the indexer reports what it just created, `hg stats` reports every node type in the graph. Either is a fine "the map exists" check.
+The index and `hg stats` counts differ because they count different things: the indexer reports what it just created, `hg stats` reports every node type in the persisted graph. The manual and container totals differ because manual `aqe init --auto` runs its own project index first, which adds test and extra file nodes, while the container initialises with `--skip-code-index` and holds only `src/`. Both include all 21 source files. Measured on 4 October 2026 with agentic-qe 3.14.8.
 
 > *Heads-up:* if you have an LLM provider configured for AQE, indexing also runs an optional relationship-extraction pass that calls the model **once per file**. On this repo that is 21 calls. If you would rather not spend them, run the index before you export any provider key, or accept it once here. Lines reading `LLM relationship extraction failed` mean that pass was skipped. The graph is still complete; only the inferred design-pattern edges are missing.
 
@@ -40,7 +42,7 @@ The two node counts differ because they count different things: the indexer repo
 
 > *Phase:* Ideation · *Why:* apply the QE ideation lenses to the epic and render a release gate *before a line of code is written*.
 
-> *Why the two extra lines:* in a full dry run (1 October 2026, AQE 3.14.1, Claude Code) the swarm's security auditor runs at maximum effort and, left alone, spent 30+ minutes and dozens of web fetches. Scoped to the files and without the security audit, the swarm finished in about 8 minutes for about $2.70, with all other reports and a GO / CONDITIONAL / NO-GO verdict.
+> *Why the two extra lines:* in a full dry run (1 October 2026, AQE 3.14.1, Claude Code) the swarm's security auditor runs at maximum effort and, left alone, spent 30+ minutes and dozens of web fetches. Scoped to the files and without the security audit, the swarm finished in about 8 minutes for about $2.70, with all other reports and a GO / CONDITIONAL / NO-GO verdict. Re-run on 4 October 2026 with AQE 3.14.8: 7.6 minutes, $2.59.
 
 **▸ Claude Code Users** — the orchestrated ideation swarm. `qcsd-ideation-swarm` is installed as a **skill**, not a command file, so if your Claude Code build does not offer it after a slash, ask for it by name instead ("Use the qcsd-ideation-swarm skill to ..."):
 
@@ -251,7 +253,9 @@ and decide on release. Do NOT generate tests — assess what exists:
 
 > *Expected coverage:* `npm run test:coverage` reports **61.62% overall** on `src/`, and
 > **100% of statements / 97.29% of branches on `src/lib/payment-retry.ts`** — before Exercise 3
-> adds a single test. The 90% gate therefore passes. Read the module anyway. If you see roughly
+> adds a single test. Coverage alone clears 90%, but the verdict can still be NO-GO: in the 4 October 2026
+> run on AQE 3.14.8 the agent scored the gate 6 of 8 criteria and blocked release on the missing
+> idempotency key. Read the module and compare. If you see roughly
 > **38%** overall, your clone predates the test-scope fix — `git pull` and re-run.
 
 > *Note:* this app keeps its testable logic in `src/lib/` (payment, Luhn, validation, rate-limiting, email) — there is **no `src/services/`**. Scoped to one file so the run finishes fast; widen to `src/lib/` for a broader verification.
@@ -273,16 +277,21 @@ gaps, contradictions, and the release verdict — framed as either:
   • an onboarding brief for someone joining the project today, or
   • a handoff document for the next person enhancing the checkout app.
 
+Where memory returns nothing for a topic, take it from reports/01 to 04
+and label that part REPORTS-BASED.
+
 Save the brief to reports/05-handoff-brief.md.
 ```
 
 > *Read the list before the brief.* It should name this codebase — `payment-retry.ts`, `CartContext.tsx`, `CheckoutForm.tsx`. A list of generic testing patterns (AAA unit tests, risk-based coverage) means the recall went wide: the store holds AQE's own 70 foundational patterns alongside the ones from your exercises. Re-run naming the module you care about, or take the reports route below.
 
+> *What to expect:* in the 4 October 2026 run (AQE 3.14.8, Claude Code) memory returned five patterns from the `learning` namespace, one per exercise that stored learnings: requirements contradictions, product factors, defect risk, payment-retry tests and the CI/CD verdict. The six seed patterns were not returned by the memory query, so cart state, form accessibility and request validation came mostly from the reports and were labelled REPORTS-BASED. A brief built only from reports is a valid result; say so in the brief rather than presenting it as memory recall.
+
 > *What you will see along the way:* lines mentioning `brain.rvf` or `VECTOR_SPACE_UNVERIFIED`, and possibly `brain.rvf.corrupt-NNNN` files in `.agentic-qe/`. Both are expected. The optional vector index is skipped and AQE falls back to SQLite, which is the authoritative store — your patterns are saved either way.
 
-> *If nothing comes back:* run `aqe learning stats`. It should read **`Total: 76`** — AQE's own foundational patterns plus the six from your exercises. If it reads `Total: 28`, the embedder was installed after the store was first opened: the six seed patterns are stored, so carry on. If it reads `Total: 0`, setup step 5 was skipped, so nothing was ever persisted: install the embedder and run `aqe learning import -i seed/aqe-seed-patterns.json`. Short on time, consolidate from what you already have instead: *"Read reports/01 through reports/04 and write the same one-page brief to reports/05-handoff-brief.md."* See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) if you want the detail.
+> *If nothing comes back:* run `aqe learning stats`. It should read **`Total: 76`** or more — AQE's own foundational patterns plus the six seed patterns, and it grows as the exercises store learnings (168 after all exercises in the 4 October run). If it reads `Total: 28`, the embedder was installed after the store was first opened: the six seed patterns are stored, so carry on. If it reads `Total: 0`, setup step 5 was skipped, so nothing was ever persisted: install the embedder and run `aqe learning import -i seed/aqe-seed-patterns.json`. Short on time, consolidate from what you already have instead: *"Read reports/01 through reports/04 and write the same one-page brief to reports/05-handoff-brief.md."* See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) if you want the detail.
 
-> *Not on Claude Code?* Claude Code captures and recalls learnings automatically through the ReasoningBank hooks. Other tools route the same work through the `memory_store` / `memory_query` MCP tools. If your agent recalls nothing there, load the seed brain above and check that `aqe learning stats` reads 76 before debugging anything else.
+> *Not on Claude Code?* Claude Code captures and recalls learnings automatically through the ReasoningBank hooks. Other tools route the same work through the `memory_store` / `memory_query` MCP tools. If your agent recalls nothing there, load the seed brain above and check that `aqe learning stats` reads 76 or more before debugging anything else.
 
 **Why this is the benefit.** You didn't re-read four reports — the fleet reconstructed the project's institutional knowledge in seconds from what each exercise saved, and a new teammate or the next run inherits all of it instantly. *(In Claude Code this capture is automatic — the ReasoningBank hooks + the `AQE Learning: N patterns loaded…` banner.)* That's the self-learning loop: agents that **remember** beat agents that start cold.
 

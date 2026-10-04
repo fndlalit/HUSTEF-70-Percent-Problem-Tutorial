@@ -3,8 +3,8 @@
 For the **6 October 2026** tutorial, this is an alternative to the manual Setup
 in README. It uses the same app and exercises, **latest published AQE**, and local
 embedder **4.2.0**. Node 22 satisfies AQE's engine requirement. The presentation
-mentions AQE 3.14.1; this container and the updated manual setup use the latest
-release instead (3.14.8 at verification on 4 October 2026).
+(version 5), this container and the manual setup all use the latest release
+(3.14.8 at verification on 4 October 2026).
 
 ## GitHub Codespaces
 
@@ -112,8 +112,10 @@ setup with a trusted embedding endpoint rather than this default image.
   then rerun preparation. The completion marker is only written after success.
 - **Agent signed in on the host only:** container credentials are separate.
   Use its login flow, or supply your own provider key as a Codespaces secret.
-- **Graph counts differ:** counts can vary with the index pass and configured
-  providers. Check all 21 source files are indexed; do not treat one total as
+- **Graph counts differ:** `aqe hg stats` shows 110 nodes / 89 edges in this container and
+  140 nodes / 102 edges after manual setup, because manual `aqe init --auto` runs its own
+  project index while the container uses `--skip-code-index`. Counts can also vary with
+  configured providers. Check all 21 source files are indexed; do not treat one total as
   proof that every file was included.
 - **MCP memory on non-Claude agents:** TROUBLESHOOTING.md describes a limitation
   observed on AQE 3.14.1. Do not assume a newer version behaves identically;
@@ -123,6 +125,9 @@ setup with a trusted embedding endpoint rather than this default image.
   entries despite the verified SQLite seed. The MCP smoke check reports this
   limitation explicitly; `--require-recall` makes it fail. This is transport
   validation, not proof that Exercise 5 can recall your agent's learnings.
+  In a full Claude Code run on 3.14.8 (manual setup, 4 October 2026) Exercise 5 did recall
+  five patterns that Exercises 1 to 4 had stored in the `learning` namespace; the six seed
+  patterns were not returned by the memory query.
 
 References: [port forwarding in Codespaces](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace),
 [Dev Container configuration](https://containers.dev/implementors/json_reference/).
